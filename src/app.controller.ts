@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -14,4 +14,10 @@ export class AppController {
   postExemplo(@Body() data: any): string {
     return `Hello, ${data.name}!`;
   }
+
+  @Put(':id')
+  putExemplo(@Param('id') id: string, @Body() data: any): string {
+    return `User with ID ${id} has been updated with name: ${data.name}`;
+  }
+  
 }
