@@ -74,7 +74,7 @@ export class UsersController {
   async deleteExemplo(@Param('id') id: number, @Res() res: Response) {
     try {
       const response = await this.usersService.deleteUser(id);
-      return res.status(203).json(response);
+      return res.status(200).json(response);
     } catch (e) {
       console.log(e);
       const treatment = {
