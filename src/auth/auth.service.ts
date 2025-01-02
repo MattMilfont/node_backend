@@ -14,13 +14,6 @@ export class AuthService {
     });
   }
 
-  async findUserById(userId: number) {
-    const query = 'SELECT * FROM users WHERE userID = ?';
-    const values = [userId];
-    const [result] = await this.pool.execute(query, values);
-    return result;
-  }
-
   async authentication(data: any) {
     const { email, password } = data;
 
