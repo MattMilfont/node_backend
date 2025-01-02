@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
@@ -21,7 +20,7 @@ export class AuthController {
   async getUserByID(@Param('id') id: number, @Res() res: Response) {
     try {
       const data = await this.authService.findUserById(id);
-      return res.status(500).json(data);
+      return res.status(200).json(data);
     } catch (e) {
       console.log(e);
       const treatment = {
@@ -46,20 +45,5 @@ export class AuthController {
       };
       return res.status(500).json(treatment);
     }
-  }
-
-  @Post()
-  postExemplo(@Body() data: any): string {
-    return `Hello, ${data.name}!`;
-  }
-
-  @Put(':id')
-  putExemplo(@Param('id') id: string, @Body() data: any): string {
-    return `User with ID ${id} has been updated with name: ${data.name}`;
-  }
-
-  @Delete(':id')
-  deleteExemplo(@Param('id') id: string, @Body() data: any): string {
-    return `User with ID ${id} has been deleted!`;
   }
 }

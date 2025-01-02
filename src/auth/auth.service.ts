@@ -14,10 +14,6 @@ export class AuthService {
     });
   }
 
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   async findUserById(userId: number) {
     const query = 'SELECT * FROM users WHERE userID = ?';
     const values = [userId];
