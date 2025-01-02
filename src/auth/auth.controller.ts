@@ -6,9 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Res,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
+
+import { Response } from 'express';
 
 @Controller('auth') // Define a rota da api
 export class AuthController {
@@ -17,6 +20,20 @@ export class AuthController {
   @Get()
   getExemplo(): string {
     return this.authService.getHello();
+  }
+
+  @Get(':id')
+  async getUserByID(@Param('id') id: number, @Res() res: Response) {
+    try {
+      const data = await this.authService.findUserById(id);
+      return res.status(500).json(data);
+    } catch (e) {
+      console.log(e);
+      const treatment = {
+        erro: 'Não foi possível realizar a busca.',
+      };
+      return res.status(500).json(treatment);
+    }
   }
 
   @Post()
