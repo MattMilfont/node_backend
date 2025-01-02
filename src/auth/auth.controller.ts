@@ -17,11 +17,6 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  getExemplo(): string {
-    return this.authService.getHello();
-  }
-
   @Get(':id')
   async getUserByID(@Param('id') id: number, @Res() res: Response) {
     try {
@@ -29,6 +24,23 @@ export class AuthController {
       return res.status(500).json(data);
     } catch (e) {
       console.log(e);
+      const treatment = {
+        erro: 'Não foi possível realizar a busca.',
+      };
+      return res.status(500).json(treatment);
+    }
+  }
+
+  @Post()
+  async authentication(@Body() data: any, @Res() res: Response) {
+    try {
+      const response = await this.authService.authentication(data);
+      if('error' in response){
+        return res.status(500).json(response.error);
+      }else{
+        return res.status(200).json(response);
+      }
+    } catch (e) {
       const treatment = {
         erro: 'Não foi possível realizar a busca.',
       };
