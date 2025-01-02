@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Res } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -56,6 +56,25 @@ export class UsersController {
       } else {
         return res.status(200).json(response);
       }
+    } catch (e) {
+      console.log(e);
+      const treatment = {
+        erro: 'Não foi possível realizar a busca.',
+      };
+      return res.status(500).json(treatment);
+    }
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Deleta os dados de um usuário por ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID do usuário' })
+  @ApiResponse({ status: 203, description: 'Usuário excluído.' })
+  @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
+  @ApiResponse({ status: 500, description: 'Erro do Servidor Interno' })
+  async deleteExemplo(@Param('id') id: number, @Res() res: Response) {
+    try {
+      const response = await this.usersService.deleteUser(id);
+      return res.status(203).json(response);
     } catch (e) {
       console.log(e);
       const treatment = {

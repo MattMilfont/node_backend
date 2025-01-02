@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { response } from 'express';
 import { createPool } from 'mysql2/promise';
 
 @Injectable()
@@ -12,6 +13,14 @@ export class UsersService {
       password: '',
       database: 'desafio_pm',
     });
+  }
+
+  async deleteUser(id: number) {
+    const query = 'DELETE FROM users WHERE userID = ?';
+    await this.pool.execute(query, [id]);
+    const response = { success: 'Usuário deletado com sucesso!' };
+
+    return response;
   }
 
   async updateUser(id: number, body: any) {
