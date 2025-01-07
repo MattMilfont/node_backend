@@ -18,7 +18,7 @@ export class AuthService {
     const { email, password } = data;
 
     if (!email || !password) {
-      const response = { error: 'Campos obrigatórios: email, senha' };
+      const response = { statusCode: '400', detailMessage: 'Bad Request' }; //bad request
       return response;
     }
 
@@ -26,7 +26,10 @@ export class AuthService {
     const [result] = await this.pool.execute(query, [email]);
 
     if (result.length === 0) {
-      const response = { error: 'Usuário não encontrado' };
+      const response = {
+        statusCode: '404',
+        detailMessage: 'Usuário não encontrado',
+      };
       return response;
     }
 
@@ -36,7 +39,10 @@ export class AuthService {
 
       return response;
     } else {
-      const response = { error: 'Senha Incorreta' };
+      const response = {
+        statusCode: '401',
+        detailMessage: 'Email ou Senha Incorretos!',
+      }; //unauthorized
       return response;
     }
   }

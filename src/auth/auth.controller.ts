@@ -26,8 +26,12 @@ export class AuthController {
   async authentication(@Body() data: any, @Res() res: Response) {
     try {
       const response = await this.authService.authentication(data);
-      if ('error' in response) {
-        return res.status(500).json(response.error);
+      if ('statusCode' in response) {
+        if (response.statusCode == '401') {
+          return res.status(401).json(response);
+        } else {
+          return res.status(400).json(response);
+        }
       } else {
         return res.status(200).json(response);
       }
