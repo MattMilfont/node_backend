@@ -11,7 +11,7 @@ export class UsersService {
       host: 'localhost',
       user: 'root',
       password: '',
-      database: 'desafio_pm',
+      database: 'modelo_db',
     });
   }
 
