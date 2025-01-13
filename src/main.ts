@@ -29,9 +29,6 @@ async function bootstrap() {
     //Versão da API
     .setVersion('1.0')
 
-    //Tag de referência
-    .addTag('exemplo')
-
     //Builda o Swagger
     .build();
 
